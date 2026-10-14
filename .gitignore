@@ -118,3 +118,6 @@ ios/Pods/
 .eslintcache
 *.tsbuildinfo
 .expo/
+
+# Claude working docs
+claude/
