@@ -1,4 +1,8 @@
-import { catalog, getMedicine, parseCatalog } from '../../src/data/catalog';
+import {
+  catalog,
+  getMedicine,
+  parseCatalog,
+} from '../../src/data/medicineCatalog';
 
 const valid = {
   id: 'x1',

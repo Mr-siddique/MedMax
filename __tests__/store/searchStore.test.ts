@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { searchMedicines } from '../../src/data/searchApi';
 import { filterMedicines } from '../../src/domain/search';
-import { catalog } from '../../src/data/catalog';
+import { catalog } from '../../src/data/medicineCatalog';
 import { Medicine } from '../../src/domain/types';
 import {
   MAX_RECENT_SEARCHES,

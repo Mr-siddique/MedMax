@@ -1,4 +1,4 @@
-import { catalog } from '../../src/data/catalog';
+import { catalog } from '../../src/data/medicineCatalog';
 import { filterMedicines } from '../../src/domain/search';
 
 const ids = (query: string) =>

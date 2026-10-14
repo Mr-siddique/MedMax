@@ -1,4 +1,4 @@
-import { getMedicine } from '../data/catalog';
+import { getMedicine } from '../data/medicineCatalog';
 import { computeBill } from '../domain/bill';
 import { resolveLines } from '../domain/cart';
 import { CartLine } from '../domain/types';

@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { getMedicine } from '../data/catalog';
+import { getMedicine } from '../data/medicineCatalog';
 import { Bill, computeBill } from '../domain/bill';
 import {
   addOne,

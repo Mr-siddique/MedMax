@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getMedicine } from '../../src/data/catalog';
+import { getMedicine } from '../../src/data/medicineCatalog';
 import { CART_STORAGE_KEY } from '../../src/store/cartPersistence';
 import { billOf, useCartStore } from '../../src/store/cartStore';
 import { useToastStore } from '../../src/store/toastStore';

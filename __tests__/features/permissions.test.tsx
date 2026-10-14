@@ -2,7 +2,10 @@ import { act, fireEvent, render, screen } from '@testing-library/react-native';
 import { AppState, AppStateStatus } from 'react-native';
 import { usePermissionSync } from '../../src/app/usePermissionSync';
 import { DeliveryLocation } from '../../src/features/permissions/DeliveryLocation';
-import { PermissionBanner } from '../../src/features/permissions/PermissionBanner';
+import {
+  PermissionPrompts,
+  PermissionStatusLine,
+} from '../../src/features/permissions/PermissionBanner';
 import { OnboardingScreen } from '../../src/features/onboarding/OnboardingScreen';
 import { openAppSettings } from '../../src/services/permissions';
 import { usePermissionStore } from '../../src/store/permissionStore';
@@ -28,7 +31,14 @@ beforeEach(() => {
   });
 });
 
-describe('PermissionBanner', () => {
+const PermissionBanner = () => (
+  <>
+    <PermissionStatusLine />
+    <PermissionPrompts />
+  </>
+);
+
+describe('permission banner', () => {
   it('always shows the debug status line', async () => {
     setStatus('granted', 'denied');
     await render(<PermissionBanner />);

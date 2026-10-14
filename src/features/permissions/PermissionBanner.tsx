@@ -57,22 +57,28 @@ function PermissionPrompt({ kind }: { kind: PermissionKind }) {
   return null;
 }
 
-/** Small debug line (required by the brief) plus a prompt for anything not granted. */
-export function PermissionBanner() {
+/** Small debug line (required by the brief): the current state of both permissions. */
+export function PermissionStatusLine() {
   const location = usePermissionStore(state => state.status.location);
   const notifications = usePermissionStore(state => state.status.notifications);
 
   return (
-    <View style={styles.container}>
-      <View
-        accessible
-        accessibilityLabel={`Permissions. Location ${location}. Notifications ${notifications}.`}
-        style={styles.debug}
-      >
-        <AppText variant="caption" tone="secondary">
-          Permissions · Location: {location} · Notifications: {notifications}
-        </AppText>
-      </View>
+    <View
+      accessible
+      accessibilityLabel={`Permissions. Location ${location}. Notifications ${notifications}.`}
+      style={styles.debug}
+    >
+      <AppText variant="caption" tone="secondary">
+        Permissions · Location: {location} · Notifications: {notifications}
+      </AppText>
+    </View>
+  );
+}
+
+/** A rationale card with the right action for each permission that is not granted. */
+export function PermissionPrompts() {
+  return (
+    <View style={styles.prompts}>
       <PermissionPrompt kind="location" />
       <PermissionPrompt kind="notifications" />
     </View>
@@ -80,7 +86,7 @@ export function PermissionBanner() {
 }
 
 const styles = StyleSheet.create({
-  container: { gap: spacing.sm },
+  prompts: { gap: spacing.sm },
   debug: {
     alignSelf: 'flex-start',
     paddingHorizontal: spacing.sm,

@@ -1,6 +1,6 @@
 import { filterMedicines } from '../domain/search';
 import { Medicine } from '../domain/types';
-import { catalog } from './catalog';
+import { catalog } from './medicineCatalog';
 
 /**
  * There is no backend, so this is a stand-in with realistic latency. It keeps
