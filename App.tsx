@@ -1,26 +1,50 @@
-import { StatusBar, StyleSheet, Text, View } from 'react-native';
+import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
+import { ActivityIndicator, StatusBar, StyleSheet, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { colors, typography } from './src/ui/theme';
+import { useHydrated } from './src/app/useHydrated';
+import { RootNavigator } from './src/navigation/RootNavigator';
+import { colors } from './src/ui/theme';
+import { ToastHost } from './src/ui/ToastHost';
+
+const navigationTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: colors.brand,
+    background: colors.background,
+    card: colors.surface,
+    text: colors.textPrimary,
+    border: colors.border,
+  },
+};
 
 function App() {
+  const hydrated = useHydrated();
+
   return (
     <SafeAreaProvider>
       <StatusBar barStyle="dark-content" />
-      <View style={styles.container}>
-        <Text style={styles.title}>MedMax</Text>
-      </View>
+      {hydrated ? (
+        <NavigationContainer theme={navigationTheme}>
+          <RootNavigator />
+        </NavigationContainer>
+      ) : (
+        <View style={styles.splash} accessibilityLabel="Loading MedMax">
+          <ActivityIndicator size="large" color={colors.brand} />
+        </View>
+      )}
+      <ToastHost />
     </SafeAreaProvider>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  splash: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: colors.background,
   },
-  title: { ...typography.title, color: colors.brand },
 });
 
 export default App;
