@@ -1,12 +1,16 @@
 import { StyleSheet, View } from 'react-native';
-import { Screen } from '../../ui/Screen';
 import { AppText } from '../../ui/AppText';
+import { Screen } from '../../ui/Screen';
 import { spacing } from '../../ui/theme';
+import { DeliveryLocation } from '../permissions/DeliveryLocation';
+import { PermissionBanner } from '../permissions/PermissionBanner';
 
 export function HomeScreen() {
   return (
     <Screen>
       <View style={styles.body}>
+        <DeliveryLocation />
+        <PermissionBanner />
         <AppText variant="title">Home</AppText>
       </View>
     </Screen>
@@ -14,5 +18,5 @@ export function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
-  body: { flex: 1, padding: spacing.lg },
+  body: { flex: 1, padding: spacing.lg, gap: spacing.md },
 });

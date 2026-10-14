@@ -2,6 +2,7 @@ import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { ActivityIndicator, StatusBar, StyleSheet, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useHydrated } from './src/app/useHydrated';
+import { usePermissionSync } from './src/app/usePermissionSync';
 import { RootNavigator } from './src/navigation/RootNavigator';
 import { colors } from './src/ui/theme';
 import { ToastHost } from './src/ui/ToastHost';
@@ -20,6 +21,7 @@ const navigationTheme = {
 
 function App() {
   const hydrated = useHydrated();
+  usePermissionSync();
 
   return (
     <SafeAreaProvider>

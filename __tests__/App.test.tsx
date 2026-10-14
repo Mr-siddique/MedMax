@@ -22,22 +22,22 @@ beforeEach(async () => {
 });
 
 describe('App shell', () => {
-  it('shows onboarding first, then the Home tab once continued', async () => {
+  it('shows onboarding first, then the Home tab once skipped', async () => {
     await render(<App />);
     await waitForHydration();
 
-    expect(screen.getByText('Welcome to MedMax')).toBeTruthy();
-    await fireEvent.press(screen.getByRole('button', { name: 'Continue' }));
+    expect(screen.getByText('Medicines in minutes')).toBeTruthy();
+    await fireEvent.press(screen.getByRole('button', { name: 'Not now' }));
 
     expect(screen.getByLabelText('Home, search medicines')).toBeTruthy();
-    expect(screen.queryByText('Welcome to MedMax')).toBeNull();
+    expect(screen.queryByText('Medicines in minutes')).toBeNull();
   });
 
   it('skips onboarding when it was already completed', async () => {
     usePermissionStore.setState({ onboardingDone: true });
     await render(<App />);
     await waitForHydration();
-    expect(screen.queryByText('Welcome to MedMax')).toBeNull();
+    expect(screen.queryByText('Medicines in minutes')).toBeNull();
     expect(screen.getByLabelText('Home, search medicines')).toBeTruthy();
   });
 
