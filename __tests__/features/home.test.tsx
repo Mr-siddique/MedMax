@@ -104,7 +104,7 @@ describe('search states', () => {
     await typeQuery('paracetamol');
     expect(screen.getByText('Dolo 650')).toBeTruthy();
     expect(screen.getByText('Crocin Advance')).toBeTruthy();
-    expect(screen.getByText('4 results for “paracetamol”')).toBeTruthy();
+    expect(screen.getByText('6 results for “paracetamol”')).toBeTruthy();
   });
 
   it('shows a no-results state with a way out', async () => {

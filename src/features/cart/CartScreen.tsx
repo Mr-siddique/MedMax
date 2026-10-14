@@ -10,6 +10,7 @@ import { TabScreenNavigation } from '../../navigation/types';
 import { useAddressStore } from '../../store/addressStore';
 import { useCartStore } from '../../store/cartStore';
 import { useCart } from '../../store/cartSelectors';
+import { useKeyboardVisible } from '../../utils/useKeyboardVisible';
 import { AppText } from '../../ui/AppText';
 import { Card } from '../../ui/Card';
 import { EmptyState } from '../../ui/EmptyState';
@@ -28,6 +29,7 @@ export function CartScreen() {
   const [changingAddress, setChangingAddress] = useState(false);
   const scrollRef = useRef<ComponentRef<typeof ScrollView>>(null);
   const placeOrder = useCartStore(state => state.placeOrder);
+  const keyboardVisible = useKeyboardVisible();
 
   if (lines.length === 0) {
     return (
@@ -74,6 +76,7 @@ export function CartScreen() {
         <ScrollView
           contentContainerStyle={styles.content}
           keyboardShouldPersistTaps="handled"
+          keyboardDismissMode="on-drag"
         >
           <AppText variant="title" accessibilityRole="header">
             Your cart
@@ -101,13 +104,16 @@ export function CartScreen() {
           <BillCard bill={bill} />
         </ScrollView>
 
-        <PlaceOrderBar
-          grandTotal={bill.grandTotal}
-          address={address}
-          blockedReason={blockedReason}
-          onPlaceOrder={handlePlaceOrder}
-          onChangeAddress={handleChangeAddress}
-        />
+        {/* Hidden while typing so the form gets the room; it returns when the keyboard closes. */}
+        {keyboardVisible ? null : (
+          <PlaceOrderBar
+            grandTotal={bill.grandTotal}
+            address={address}
+            blockedReason={blockedReason}
+            onPlaceOrder={handlePlaceOrder}
+            onChangeAddress={handleChangeAddress}
+          />
+        )}
       </KeyboardAvoidingView>
     </Screen>
   );

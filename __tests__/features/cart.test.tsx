@@ -1,4 +1,5 @@
 import { fireEvent, render, screen, act } from '@testing-library/react-native';
+import { Keyboard } from 'react-native';
 import { CartScreen } from '../../src/features/cart/CartScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
@@ -504,5 +505,30 @@ describe('placing the order', () => {
     fill('m6', 2);
     await render(<CartScreen />);
     expect(screen.getAllByLabelText('Grand total ₹400')).toHaveLength(1);
+  });
+});
+
+const keyboardEvent = {
+  duration: 0,
+  easing: 'keyboard',
+  endCoordinates: { screenX: 0, screenY: 0, width: 0, height: 0 },
+} as const;
+
+describe('keyboard', () => {
+  it('hides the Place order bar while typing and brings it back after', async () => {
+    const listeners = new Map<string, () => void>();
+    jest.spyOn(Keyboard, 'addListener').mockImplementation((event, cb) => {
+      listeners.set(event, () => cb(keyboardEvent));
+      return { remove: jest.fn() };
+    });
+    fill('m1', 1);
+    await render(<CartScreen />);
+    expect(screen.getByRole('button', { name: 'Place order' })).toBeTruthy();
+
+    await act(async () => listeners.get('keyboardDidShow')?.());
+    expect(screen.queryByRole('button', { name: 'Place order' })).toBeNull();
+
+    await act(async () => listeners.get('keyboardDidHide')?.());
+    expect(screen.getByRole('button', { name: 'Place order' })).toBeTruthy();
   });
 });

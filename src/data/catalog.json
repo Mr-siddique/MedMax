@@ -1,17 +1,242 @@
 [
-  { "id": "m1", "name": "Dolo 650", "salt": "Paracetamol", "price": 30, "maxQty": 5, "rx": false },
-  { "id": "m2", "name": "Crocin Advance", "salt": "Paracetamol", "price": 45, "maxQty": 5, "rx": false },
-  { "id": "m3", "name": "Azithral 500", "salt": "Azithromycin", "price": 120, "maxQty": 2, "rx": true },
-  { "id": "m4", "name": "Pan 40", "salt": "Pantoprazole", "price": 150, "maxQty": 3, "rx": true },
-  { "id": "m5", "name": "Cetrizine", "salt": "Cetirizine", "price": 25, "maxQty": 10, "rx": false },
-  { "id": "m6", "name": "Allegra 120", "salt": "Fexofenadine", "price": 180, "maxQty": 3, "rx": false },
-  { "id": "m7", "name": "Calpol 500", "salt": "Paracetamol", "price": 20, "maxQty": 5, "rx": false },
-  { "id": "m8", "name": "Augmentin 625", "salt": "Amoxicillin", "price": 200, "maxQty": 2, "rx": true },
-  { "id": "m9", "name": "Digene Gel", "salt": "Magnesium Hydroxide", "price": 110, "maxQty": 4, "rx": false },
-  { "id": "m10", "name": "Volini Spray", "salt": "Diclofenac", "price": 140, "maxQty": 2, "rx": false },
-  { "id": "m11", "name": "Honitus Syrup", "salt": "Herbal Cough Formula", "price": 95, "maxQty": 3, "rx": false },
-  { "id": "m12", "name": "Cheston Cold", "salt": "Cetirizine/Paracetamol", "price": 40, "maxQty": 5, "rx": false },
-  { "id": "m13", "name": "Vicks Vaporub", "salt": "Menthol/Camphor", "price": 85, "maxQty": 4, "rx": false },
-  { "id": "m14", "name": "Saridon", "salt": "Propyphenazone", "price": 35, "maxQty": 5, "rx": false },
-  { "id": "m15", "name": "Shelcal 500", "salt": "Calcium/Vitamin D3", "price": 115, "maxQty": 3, "rx": false }
+  {
+    "id": "m1",
+    "name": "Dolo 650",
+    "salt": "Paracetamol",
+    "price": 30,
+    "maxQty": 5,
+    "rx": false
+  },
+  {
+    "id": "m2",
+    "name": "Crocin Advance",
+    "salt": "Paracetamol",
+    "price": 45,
+    "maxQty": 5,
+    "rx": false
+  },
+  {
+    "id": "m3",
+    "name": "Azithral 500",
+    "salt": "Azithromycin",
+    "price": 120,
+    "maxQty": 2,
+    "rx": true
+  },
+  {
+    "id": "m4",
+    "name": "Pan 40",
+    "salt": "Pantoprazole",
+    "price": 150,
+    "maxQty": 3,
+    "rx": true
+  },
+  {
+    "id": "m5",
+    "name": "Cetrizine",
+    "salt": "Cetirizine",
+    "price": 25,
+    "maxQty": 10,
+    "rx": false
+  },
+  {
+    "id": "m6",
+    "name": "Allegra 120",
+    "salt": "Fexofenadine",
+    "price": 180,
+    "maxQty": 3,
+    "rx": false
+  },
+  {
+    "id": "m7",
+    "name": "Calpol 500",
+    "salt": "Paracetamol",
+    "price": 20,
+    "maxQty": 5,
+    "rx": false
+  },
+  {
+    "id": "m8",
+    "name": "Augmentin 625",
+    "salt": "Amoxicillin",
+    "price": 200,
+    "maxQty": 2,
+    "rx": true
+  },
+  {
+    "id": "m9",
+    "name": "Digene Gel",
+    "salt": "Magnesium Hydroxide",
+    "price": 110,
+    "maxQty": 4,
+    "rx": false
+  },
+  {
+    "id": "m10",
+    "name": "Volini Spray",
+    "salt": "Diclofenac",
+    "price": 140,
+    "maxQty": 2,
+    "rx": false
+  },
+  {
+    "id": "m11",
+    "name": "Honitus Syrup",
+    "salt": "Herbal Cough Formula",
+    "price": 95,
+    "maxQty": 3,
+    "rx": false
+  },
+  {
+    "id": "m12",
+    "name": "Cheston Cold",
+    "salt": "Cetirizine/Paracetamol",
+    "price": 40,
+    "maxQty": 5,
+    "rx": false
+  },
+  {
+    "id": "m13",
+    "name": "Vicks Vaporub",
+    "salt": "Menthol/Camphor",
+    "price": 85,
+    "maxQty": 4,
+    "rx": false
+  },
+  {
+    "id": "m14",
+    "name": "Saridon",
+    "salt": "Propyphenazone",
+    "price": 35,
+    "maxQty": 5,
+    "rx": false
+  },
+  {
+    "id": "m15",
+    "name": "Shelcal 500",
+    "salt": "Calcium/Vitamin D3",
+    "price": 115,
+    "maxQty": 3,
+    "rx": false
+  },
+  {
+    "id": "m16",
+    "name": "Combiflam",
+    "salt": "Ibuprofen/Paracetamol",
+    "price": 42,
+    "maxQty": 5,
+    "rx": false
+  },
+  {
+    "id": "m17",
+    "name": "Brufen 400",
+    "salt": "Ibuprofen",
+    "price": 28,
+    "maxQty": 5,
+    "rx": false
+  },
+  {
+    "id": "m18",
+    "name": "Zerodol-P",
+    "salt": "Aceclofenac/Paracetamol",
+    "price": 95,
+    "maxQty": 3,
+    "rx": true
+  },
+  {
+    "id": "m19",
+    "name": "Omez 20",
+    "salt": "Omeprazole",
+    "price": 60,
+    "maxQty": 4,
+    "rx": true
+  },
+  {
+    "id": "m20",
+    "name": "Rantac 150",
+    "salt": "Ranitidine",
+    "price": 35,
+    "maxQty": 5,
+    "rx": false
+  },
+  {
+    "id": "m21",
+    "name": "Gelusil MPS",
+    "salt": "Aluminium Hydroxide/Magnesium Hydroxide",
+    "price": 55,
+    "maxQty": 4,
+    "rx": false
+  },
+  {
+    "id": "m22",
+    "name": "Eno Lemon",
+    "salt": "Sodium Bicarbonate",
+    "price": 12,
+    "maxQty": 10,
+    "rx": false
+  },
+  {
+    "id": "m23",
+    "name": "Electral ORS",
+    "salt": "Oral Rehydration Salts",
+    "price": 22,
+    "maxQty": 10,
+    "rx": false
+  },
+  {
+    "id": "m24",
+    "name": "Becosules",
+    "salt": "Vitamin B Complex",
+    "price": 48,
+    "maxQty": 5,
+    "rx": false
+  },
+  {
+    "id": "m25",
+    "name": "Limcee 500",
+    "salt": "Vitamin C",
+    "price": 25,
+    "maxQty": 10,
+    "rx": false
+  },
+  {
+    "id": "m26",
+    "name": "Metformin 500",
+    "salt": "Metformin",
+    "price": 30,
+    "maxQty": 3,
+    "rx": true
+  },
+  {
+    "id": "m27",
+    "name": "Amlodipine 5",
+    "salt": "Amlodipine",
+    "price": 40,
+    "maxQty": 3,
+    "rx": true
+  },
+  {
+    "id": "m28",
+    "name": "Betadine Ointment",
+    "salt": "Povidone Iodine",
+    "price": 78,
+    "maxQty": 3,
+    "rx": false
+  },
+  {
+    "id": "m29",
+    "name": "Dettol Antiseptic",
+    "salt": "Chloroxylenol",
+    "price": 120,
+    "maxQty": 2,
+    "rx": false
+  },
+  {
+    "id": "m30",
+    "name": "Otrivin Nasal Spray",
+    "salt": "Xylometazoline",
+    "price": 92,
+    "maxQty": 2,
+    "rx": false
+  }
 ]

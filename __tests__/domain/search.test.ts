@@ -14,7 +14,7 @@ describe('filterMedicines', () => {
   });
 
   it('matches several items sharing a salt', () => {
-    expect(ids('paracetamol')).toEqual(['m1', 'm2', 'm7', 'm12']);
+    expect(ids('paracetamol')).toEqual(['m1', 'm2', 'm7', 'm12', 'm16', 'm18']);
   });
 
   it('matches substrings and trims the query', () => {

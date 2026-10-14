@@ -3,7 +3,7 @@ import { AccessibilityInfo, Pressable, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useToastStore } from '../store/toastStore';
 import { AppText } from './AppText';
-import { colors, elevation, radius, spacing } from './theme';
+import { colors, elevation, minTouchTarget, radius, spacing } from './theme';
 
 export const TOAST_DURATION_MS = 4000;
 
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: spacing.lg,
     right: spacing.lg,
-    minHeight: 48,
+    minHeight: minTouchTarget,
     justifyContent: 'center',
     padding: spacing.md,
     borderRadius: radius.md,

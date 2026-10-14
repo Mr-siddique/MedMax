@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { FlatList, StyleSheet, View } from 'react-native';
+import { FlatList, KeyboardAvoidingView, StyleSheet, View } from 'react-native';
 import { Medicine } from '../../domain/types';
 import { catalog } from '../../data/medicineCatalog';
 import { SearchStatus, useSearchStore } from '../../store/searchStore';
@@ -53,45 +53,49 @@ export function HomeScreen() {
 
   return (
     <Screen>
-      <FlatList
-        data={visibleMedicines(status, results)}
-        keyExtractor={medicine => medicine.id}
-        renderItem={({ item }) => (
-          <MedicineRow
-            medicine={item}
-            onAdded={() => recordRecent(useSearchStore.getState().query)}
-          />
-        )}
-        ItemSeparatorComponent={Separator}
-        keyboardShouldPersistTaps="handled"
-        contentContainerStyle={styles.content}
-        ListHeaderComponent={
-          <View style={styles.header}>
-            <DeliveryLocation />
-            <PermissionStatusLine />
-            <SearchBar
-              value={text}
-              onChangeText={setText}
-              onSubmit={submit}
-              onClear={clear}
+      {/* Edge-to-edge means the window does not resize, so lift the list above the keyboard ourselves. */}
+      <KeyboardAvoidingView style={styles.flex} behavior="padding">
+        <FlatList
+          data={visibleMedicines(status, results)}
+          keyExtractor={medicine => medicine.id}
+          renderItem={({ item }) => (
+            <MedicineRow
+              medicine={item}
+              onAdded={() => recordRecent(useSearchStore.getState().query)}
             />
-            <PermissionPrompts />
-            <SearchStatusView
-              status={status}
-              query={searchedQuery.trim()}
-              resultCount={results.length}
-              recents={recents}
-              onSelectRecent={query => {
-                recordRecent(query);
-                runNow(query);
-              }}
-              onClearRecents={clearRecents}
-              onClearSearch={clear}
-              onRetry={() => search(text)}
-            />
-          </View>
-        }
-      />
+          )}
+          ItemSeparatorComponent={Separator}
+          keyboardShouldPersistTaps="handled"
+          keyboardDismissMode="on-drag"
+          contentContainerStyle={styles.content}
+          ListHeaderComponent={
+            <View style={styles.header}>
+              <DeliveryLocation />
+              <PermissionStatusLine />
+              <SearchBar
+                value={text}
+                onChangeText={setText}
+                onSubmit={submit}
+                onClear={clear}
+              />
+              <PermissionPrompts />
+              <SearchStatusView
+                status={status}
+                query={searchedQuery.trim()}
+                resultCount={results.length}
+                recents={recents}
+                onSelectRecent={query => {
+                  recordRecent(query);
+                  runNow(query);
+                }}
+                onClearRecents={clearRecents}
+                onClearSearch={clear}
+                onRetry={() => search(text)}
+              />
+            </View>
+          }
+        />
+      </KeyboardAvoidingView>
     </Screen>
   );
 }
@@ -182,6 +186,7 @@ function Separator() {
 }
 
 const styles = StyleSheet.create({
+  flex: { flex: 1 },
   content: { padding: spacing.lg, paddingBottom: spacing.xxl },
   header: { gap: spacing.md, marginBottom: spacing.md },
   section: { gap: spacing.lg },

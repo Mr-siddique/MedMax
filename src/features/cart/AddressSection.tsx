@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Pressable, StyleSheet, View } from 'react-native';
+import { ComponentRef, useRef, useState } from 'react';
+import { Pressable, StyleSheet, TextInput, View } from 'react-native';
 import {
   AddressErrors,
   AddressField,
@@ -13,6 +13,8 @@ import { Button } from '../../ui/Button';
 import { Card } from '../../ui/Card';
 import { TextField } from '../../ui/TextField';
 import { minTouchTarget, spacing } from '../../ui/theme';
+
+type InputHandle = ComponentRef<typeof TextInput>;
 
 const EMPTY: Address = { name: '', phone: '', line1: '', pincode: '' };
 
@@ -34,6 +36,9 @@ export function AddressSection({ editing, onDone }: Props) {
   const [open, setOpen] = useState(false);
   const [values, setValues] = useState<Address>(address ?? EMPTY);
   const [errors, setErrors] = useState<AddressErrors>({});
+  const phoneRef = useRef<InputHandle>(null);
+  const line1Ref = useRef<InputHandle>(null);
+  const pincodeRef = useRef<InputHandle>(null);
 
   const change = (field: AddressField) => (text: string) => {
     setValues(current => ({ ...current, [field]: text }));
@@ -110,30 +115,39 @@ export function AddressSection({ editing, onDone }: Props) {
         autoCapitalize="words"
         autoComplete="name"
         returnKeyType="next"
+        submitBehavior="submit"
+        onSubmitEditing={() => phoneRef.current?.focus()}
       />
       <TextField
         label="Mobile number"
         value={values.phone}
         onChangeText={change('phone')}
         error={errors.phone}
+        inputRef={phoneRef}
         keyboardType="phone-pad"
         maxLength={10}
         autoComplete="tel"
         returnKeyType="next"
+        submitBehavior="submit"
+        onSubmitEditing={() => line1Ref.current?.focus()}
       />
       <TextField
         label="House / flat, street and area"
         value={values.line1}
         onChangeText={change('line1')}
         error={errors.line1}
+        inputRef={line1Ref}
         autoCapitalize="words"
         returnKeyType="next"
+        submitBehavior="submit"
+        onSubmitEditing={() => pincodeRef.current?.focus()}
       />
       <TextField
         label="Pincode"
         value={values.pincode}
         onChangeText={change('pincode')}
         error={errors.pincode}
+        inputRef={pincodeRef}
         keyboardType="number-pad"
         maxLength={6}
         returnKeyType="done"
