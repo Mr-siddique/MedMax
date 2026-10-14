@@ -11,12 +11,11 @@ import {
 } from '../domain/cart';
 import { evaluateCoupon, isOneTimeUse } from '../domain/coupons';
 import { CartLine } from '../domain/types';
-import { createSafeStorage } from '../persistence/safeStorage';
+import { persistOptions } from '../persistence/persistOptions';
 import {
   CART_STORAGE_KEY,
   CART_STORAGE_VERSION,
   EMPTY_CART,
-  migrateCart,
   PersistedCart,
   sanitizeCart,
 } from './cartPersistence';
@@ -132,20 +131,16 @@ export const useCartStore = create<CartState>()(
         },
       };
     },
-    {
+    persistOptions<CartState, PersistedCart>({
       name: CART_STORAGE_KEY,
       version: CART_STORAGE_VERSION,
-      storage: createSafeStorage<PersistedCart>(),
       partialize: ({ lines, couponCode, usedCouponCodes }) => ({
         lines,
         couponCode,
         usedCouponCodes,
       }),
-      migrate: migrateCart,
-      merge: (persisted, current) => ({
-        ...current,
-        ...sanitizeCart(persisted),
-      }),
-    },
+      sanitize: sanitizeCart,
+      empty: EMPTY_CART,
+    }),
   ),
 );

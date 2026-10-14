@@ -18,3 +18,13 @@ export interface ResolvedLine {
   medicine: Medicine;
   qty: number;
 }
+
+export interface Address {
+  name: string;
+  /** 10-digit Indian mobile number. */
+  phone: string;
+  /** House / flat, street and area. */
+  line1: string;
+  /** 6-digit Indian pincode. */
+  pincode: string;
+}

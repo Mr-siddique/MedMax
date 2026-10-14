@@ -4,7 +4,6 @@ import { resolveLines } from '../domain/cart';
 import { CartLine } from '../domain/types';
 import { isRecord, isStringArray } from '../utils/guards';
 
-/** Bump when the saved shape changes and add a branch in `migrateCart`. */
 export const CART_STORAGE_VERSION = 1;
 export const CART_STORAGE_KEY = 'medmax.cart';
 
@@ -73,14 +72,4 @@ export function sanitizeCart(raw: unknown): PersistedCart {
     couponCode: bill.appliedCouponCode,
     usedCouponCodes,
   };
-}
-
-/** Only version 1 exists. Anything else is unreadable and starts fresh. */
-export function migrateCart(
-  persisted: unknown,
-  version: number,
-): PersistedCart {
-  return version === CART_STORAGE_VERSION
-    ? sanitizeCart(persisted)
-    : EMPTY_CART;
 }
