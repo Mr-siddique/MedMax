@@ -1,8 +1,8 @@
 import { Platform, TextStyle } from 'react-native';
 
 export const colors = {
-  brand: '#0F8A6D',
-  brandDark: '#0B6B55',
+  brand: '#0B7A60',
+  brandDark: '#085C49',
   brandSoft: '#E3F4EF',
 
   background: '#F6F7F9',
@@ -16,7 +16,7 @@ export const colors = {
 
   success: '#1B8F4C',
   successSoft: '#E4F5EB',
-  warning: '#B26A00',
+  warning: '#9A5B00',
   warningSoft: '#FFF3DC',
   danger: '#C62F2F',
   dangerSoft: '#FDE8E8',
