@@ -56,12 +56,6 @@ export function OnboardingScreen() {
 
       <View style={styles.actions}>
         <Button label="Allow permissions" loading={asking} onPress={allow} />
-        <Button
-          label="Not now"
-          variant="ghost"
-          disabled={asking}
-          onPress={completeOnboarding}
-        />
       </View>
     </Screen>
   );

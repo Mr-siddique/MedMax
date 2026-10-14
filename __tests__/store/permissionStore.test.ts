@@ -170,6 +170,25 @@ describe('requestAll (onboarding)', () => {
   });
 });
 
+describe('requestMissing (every launch)', () => {
+  it('asks again only for permissions that are denied', async () => {
+    osReports('denied', 'granted');
+    mockRequest.mockResolvedValue('granted');
+    await store().requestMissing();
+    expect(mockRequest.mock.calls.map(([kind]) => kind)).toEqual(['location']);
+  });
+
+  it('does not ask for blocked or granted permissions', async () => {
+    usePermissionStore.setState({
+      blockedHint: { location: true, notifications: false },
+    });
+    osReports('denied', 'granted');
+    await store().requestMissing();
+    expect(mockRequest).not.toHaveBeenCalled();
+    expect(store().status.location).toBe('blocked');
+  });
+});
+
 describe('persistence', () => {
   it('restores onboardingDone and hints, ignoring junk', async () => {
     await AsyncStorage.setItem(

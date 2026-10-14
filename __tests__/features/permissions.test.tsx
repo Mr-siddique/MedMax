@@ -133,15 +133,6 @@ describe('OnboardingScreen', () => {
     expect(requestAll).toHaveBeenCalledTimes(1);
     expect(usePermissionStore.getState().onboardingDone).toBe(true);
   });
-
-  it('"Not now" skips without asking', async () => {
-    const requestAll = jest.fn();
-    usePermissionStore.setState({ requestAll });
-    await render(<OnboardingScreen />);
-    await fireEvent.press(screen.getByRole('button', { name: 'Not now' }));
-    expect(requestAll).not.toHaveBeenCalled();
-    expect(usePermissionStore.getState().onboardingDone).toBe(true);
-  });
 });
 
 describe('usePermissionSync', () => {

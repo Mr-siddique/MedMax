@@ -33,6 +33,8 @@ interface PermissionState extends PersistedPermissions {
   request: (kind: PermissionKind) => Promise<void>;
   /** Onboarding: asks for location, then notifications. Never rejects. */
   requestAll: () => Promise<void>;
+  /** Launch: re-reads the OS state, then asks again for anything still denied (not blocked). Never rejects. */
+  requestMissing: () => Promise<void>;
   fetchLocation: () => Promise<void>;
 }
 
@@ -115,6 +117,15 @@ export const usePermissionStore = create<PermissionState>()(
         requestAll: async () => {
           await get().request('location');
           await get().request('notifications');
+        },
+
+        requestMissing: async () => {
+          await get().refresh();
+          for (const kind of KINDS) {
+            if (get().status[kind] === 'denied') {
+              await get().request(kind);
+            }
+          }
         },
 
         fetchLocation: async () => {

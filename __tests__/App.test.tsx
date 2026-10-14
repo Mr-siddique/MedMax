@@ -22,12 +22,14 @@ beforeEach(async () => {
 });
 
 describe('App shell', () => {
-  it('shows onboarding first, then the Home tab once skipped', async () => {
+  it('shows onboarding first, then the Home tab once permissions are asked', async () => {
     await render(<App />);
     await waitForHydration();
 
     expect(screen.getByText('Medicines in minutes')).toBeTruthy();
-    await fireEvent.press(screen.getByRole('button', { name: 'Not now' }));
+    await fireEvent.press(
+      screen.getByRole('button', { name: 'Allow permissions' }),
+    );
 
     expect(screen.getByLabelText('Home, search medicines')).toBeTruthy();
     expect(screen.queryByText('Medicines in minutes')).toBeNull();
