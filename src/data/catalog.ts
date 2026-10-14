@@ -1,9 +1,6 @@
 import rawCatalog from './catalog.json';
 import { Medicine } from '../domain/types';
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === 'object' && value !== null;
-}
+import { isRecord } from '../utils/guards';
 
 function isInteger(value: unknown, min: number): boolean {
   return typeof value === 'number' && Number.isInteger(value) && value >= min;
