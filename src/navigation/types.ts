@@ -13,8 +13,6 @@ export type MainTabParamList = {
 export type RootStackParamList = {
   Onboarding: undefined;
   Main: NavigatorScreenParams<MainTabParamList> | undefined;
-  Address: undefined;
-  Coupons: undefined;
   OrderPlaced: { orderId: string; total: number };
 };
 

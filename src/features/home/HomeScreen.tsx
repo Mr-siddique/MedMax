@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
+import { Medicine } from '../../domain/types';
+import { catalog } from '../../data/medicineCatalog';
 import { SearchStatus, useSearchStore } from '../../store/searchStore';
 import { useDebouncedValue } from '../../utils/useDebouncedValue';
 import { AppText } from '../../ui/AppText';
@@ -52,7 +54,7 @@ export function HomeScreen() {
   return (
     <Screen>
       <FlatList
-        data={status === 'success' ? results : []}
+        data={visibleMedicines(status, results)}
         keyExtractor={medicine => medicine.id}
         renderItem={({ item }) => (
           <MedicineRow
@@ -94,6 +96,17 @@ export function HomeScreen() {
   );
 }
 
+/** With nothing typed the whole catalog is browsable; otherwise only the matches. */
+function visibleMedicines(
+  status: SearchStatus,
+  results: readonly Medicine[],
+): readonly Medicine[] {
+  if (status === 'idle') {
+    return catalog;
+  }
+  return status === 'success' ? results : [];
+}
+
 interface StatusViewProps {
   status: SearchStatus;
   query: string;
@@ -125,13 +138,9 @@ function SearchStatusView({
             onSelect={onSelectRecent}
             onClear={onClearRecents}
           />
-          {recents.length === 0 ? (
-            <EmptyState
-              icon="🔍"
-              title="Search for medicines"
-              message="Look up a medicine by name or by its salt, like “Dolo” or “Paracetamol”."
-            />
-          ) : null}
+          <AppText variant="heading" accessibilityRole="header">
+            All medicines
+          </AppText>
         </View>
       );
     case 'loading':

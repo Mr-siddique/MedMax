@@ -1,6 +1,4 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { AddressScreen } from '../features/address/AddressScreen';
-import { CouponsScreen } from '../features/coupons/CouponsScreen';
 import { OnboardingScreen } from '../features/onboarding/OnboardingScreen';
 import { OrderPlacedScreen } from '../features/order/OrderPlacedScreen';
 import { usePermissionStore } from '../store/permissionStore';
@@ -33,16 +31,6 @@ export function RootNavigator() {
             name="Main"
             component={MainTabs}
             options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="Address"
-            component={AddressScreen}
-            options={{ title: 'Delivery address', presentation: 'modal' }}
-          />
-          <Stack.Screen
-            name="Coupons"
-            component={CouponsScreen}
-            options={{ title: 'Apply coupon', presentation: 'modal' }}
           />
           <Stack.Screen
             name="OrderPlaced"

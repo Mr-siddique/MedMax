@@ -1,5 +1,11 @@
 import { useNavigation } from '@react-navigation/native';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { ComponentRef, useRef, useState } from 'react';
+import {
+  KeyboardAvoidingView,
+  ScrollView,
+  StyleSheet,
+  View,
+} from 'react-native';
 import { TabScreenNavigation } from '../../navigation/types';
 import { useAddressStore } from '../../store/addressStore';
 import { useCartStore } from '../../store/cartStore';
@@ -9,16 +15,18 @@ import { Card } from '../../ui/Card';
 import { EmptyState } from '../../ui/EmptyState';
 import { Screen } from '../../ui/Screen';
 import { colors, spacing } from '../../ui/theme';
-import { AddressRow } from './AddressRow';
+import { AddressSection } from './AddressSection';
 import { BillCard } from './BillCard';
 import { CartLineRow } from './CartLineRow';
-import { CouponRow } from './CouponRow';
+import { CouponSection } from './CouponSection';
 import { PlaceOrderBar } from './PlaceOrderBar';
 
 export function CartScreen() {
   const navigation = useNavigation<TabScreenNavigation<'CartTab'>>();
   const { lines, bill } = useCart();
-  const hasAddress = useAddressStore(state => state.address !== null);
+  const address = useAddressStore(state => state.address);
+  const [changingAddress, setChangingAddress] = useState(false);
+  const scrollRef = useRef<ComponentRef<typeof ScrollView>>(null);
   const placeOrder = useCartStore(state => state.placeOrder);
 
   if (lines.length === 0) {
@@ -37,6 +45,19 @@ export function CartScreen() {
     );
   }
 
+  const handleChangeAddress = () => {
+    setChangingAddress(true);
+    // The form lives at the top of the list.
+    scrollRef.current?.scrollTo({ y: 0, animated: true });
+  };
+
+  const blockedReason =
+    address === null
+      ? 'Add a delivery address to place your order'
+      : changingAddress
+      ? 'Save or cancel your address changes first'
+      : null;
+
   const handlePlaceOrder = () => {
     const order = placeOrder();
     if (order) {
@@ -49,47 +70,51 @@ export function CartScreen() {
 
   return (
     <Screen>
-      <ScrollView
-        contentContainerStyle={styles.content}
-        keyboardShouldPersistTaps="handled"
-      >
-        <AppText variant="title" accessibilityRole="header">
-          Your cart
-        </AppText>
+      <KeyboardAvoidingView style={styles.flex} behavior="padding">
+        <ScrollView
+          contentContainerStyle={styles.content}
+          keyboardShouldPersistTaps="handled"
+        >
+          <AppText variant="title" accessibilityRole="header">
+            Your cart
+          </AppText>
 
-        {lines.map(line => (
-          <CartLineRow key={line.medicine.id} {...line} />
-        ))}
+          <AddressSection
+            editing={changingAddress}
+            onDone={() => setChangingAddress(false)}
+          />
 
-        {lines.some(line => line.medicine.rx) ? (
-          <Card style={styles.rxNotice}>
-            <AppText variant="caption">
-              Rx items need a valid prescription. It will be verified at
-              delivery, so keep it handy.
-            </AppText>
-          </Card>
-        ) : null}
+          {lines.map(line => (
+            <CartLineRow key={line.medicine.id} {...line} />
+          ))}
 
-        <CouponRow
-          bill={bill}
-          onOpenCoupons={() => navigation.navigate('Coupons')}
+          {lines.some(line => line.medicine.rx) ? (
+            <Card style={styles.rxNotice}>
+              <AppText variant="caption">
+                Rx items need a valid prescription. It will be verified at
+                delivery, so keep it handy.
+              </AppText>
+            </Card>
+          ) : null}
+
+          <CouponSection bill={bill} />
+          <BillCard bill={bill} />
+        </ScrollView>
+
+        <PlaceOrderBar
+          grandTotal={bill.grandTotal}
+          address={address}
+          blockedReason={blockedReason}
+          onPlaceOrder={handlePlaceOrder}
+          onChangeAddress={handleChangeAddress}
         />
-        <BillCard bill={bill} />
-        <AddressRow onPress={() => navigation.navigate('Address')} />
-      </ScrollView>
-
-      <PlaceOrderBar
-        grandTotal={bill.grandTotal}
-        blockedReason={
-          hasAddress ? null : 'Add a delivery address to place your order'
-        }
-        onPlaceOrder={handlePlaceOrder}
-      />
+      </KeyboardAvoidingView>
     </Screen>
   );
 }
 
 const styles = StyleSheet.create({
+  flex: { flex: 1 },
   empty: { flex: 1, justifyContent: 'center' },
   content: { padding: spacing.lg, gap: spacing.md },
   rxNotice: { backgroundColor: colors.warningSoft },

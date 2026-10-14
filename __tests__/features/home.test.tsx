@@ -56,10 +56,29 @@ beforeEach(() => {
 afterEach(() => jest.useRealTimers());
 
 describe('search states', () => {
-  it('starts with a hint and no API call', async () => {
+  it('lists the catalog when the box is empty, without calling the API', async () => {
     await render(<HomeScreen />);
-    expect(screen.getByText('Search for medicines')).toBeTruthy();
+    expect(screen.getByText('All medicines')).toBeTruthy();
+    expect(screen.getByText('Dolo 650')).toBeTruthy();
+    expect(screen.getByText('Crocin Advance')).toBeTruthy();
     expect(mockSearch).not.toHaveBeenCalled();
+  });
+
+  it('adds straight from the browse list without recording a search', async () => {
+    await render(<HomeScreen />);
+    await fireEvent.press(
+      screen.getByRole('button', { name: 'Add Dolo 650 to cart' }),
+    );
+    expect(useCartStore.getState().lines).toEqual([{ id: 'm1', qty: 1 }]);
+    expect(useSearchStore.getState().recents).toEqual([]);
+  });
+
+  it('swaps the catalog for the matches once a search runs', async () => {
+    await render(<HomeScreen />);
+    await typeQuery('azithral');
+    expect(screen.queryByText('All medicines')).toBeNull();
+    expect(screen.queryByText('Dolo 650')).toBeNull();
+    expect(screen.getByText('Azithral 500')).toBeTruthy();
   });
 
   it('waits for the debounce, shows loading, then results', async () => {
@@ -93,7 +112,7 @@ describe('search states', () => {
     await typeQuery('zzzz');
     expect(screen.getByText('No medicines found')).toBeTruthy();
     await fireEvent.press(screen.getByRole('button', { name: 'Clear search' }));
-    expect(screen.getByText('Search for medicines')).toBeTruthy();
+    expect(screen.getByText('All medicines')).toBeTruthy();
     expect(screen.getByLabelText(SEARCH_LABEL).props.value).toBe('');
   });
 
